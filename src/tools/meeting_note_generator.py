@@ -1,5 +1,8 @@
+import random
+
+
 class MeetingNoteGenerator:
-    """会议记录生成器 - 语音转文字并提取重点"""
+    """会议记录生成器 - 语音转文字并提取重点（演示）"""
     def execute(self, audio_path=None, output_path=None):
-        print(f"[MeetingNoteGenerator] 会议记录: {audio_path} -> {output_path}")
-        return "会议记录已生成（演示）"
+        # 实际可用语音识别库，这里演示
+        return f"会议音频 {audio_path or '[未提供]'} 已转写为文字，重点已提取（演示）"

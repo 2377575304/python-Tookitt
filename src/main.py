@@ -1,6 +1,6 @@
 import sys
 from PyQt5.QtWidgets import (
-    QApplication, QWidget, QVBoxLayout, QHBoxLayout, QListWidget, QLabel, QPushButton, QTextEdit, QLineEdit, QFormLayout, QScrollArea, QMessageBox, QTreeWidget, QTreeWidgetItem
+    QApplication, QWidget, QVBoxLayout, QHBoxLayout, QListWidget, QLabel, QPushButton, QTextEdit, QLineEdit, QFormLayout, QScrollArea, QMessageBox, QTreeWidget, QTreeWidgetItem, QComboBox
 )
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon
@@ -36,12 +36,18 @@ class ToolWidget(QWidget):
             for name, param in sig.parameters.items():
                 if name == 'self':
                     continue
-                le = QLineEdit()
-                le.setPlaceholderText(f"{name}")
-                if self.tool_name == '纪念日倒计时' and name == 'target_date':
-                    le.setPlaceholderText("如 2025-12-31")
-                self.param_inputs[name] = le
-                self.form_layout.addRow(name, le)
+                if self.tool_name == '算法可视化工具' and name == 'algorithm':
+                    cb = QComboBox()
+                    cb.addItems(['bubble', 'insert', 'select'])
+                    self.param_inputs[name] = cb
+                    self.form_layout.addRow('算法类型', cb)
+                else:
+                    le = QLineEdit()
+                    le.setPlaceholderText(f"{name}")
+                    if self.tool_name == '纪念日倒计时' and name == 'target_date':
+                        le.setPlaceholderText("如 2025-12-31")
+                    self.param_inputs[name] = le
+                    self.form_layout.addRow(name, le)
         layout.addLayout(self.form_layout)
         self.run_btn = QPushButton("执行")
         self.run_btn.setStyleSheet("background:#2d8cf0;color:white;font-weight:bold;height:32px")
@@ -56,7 +62,10 @@ class ToolWidget(QWidget):
     def run_tool(self):
         params = {}
         for k, v in self.param_inputs.items():
-            val = v.text()
+            if hasattr(v, 'currentText'):
+                val = v.currentText()
+            else:
+                val = v.text()
             params[k] = val if val else None
         try:
             tool = self.tool_class()
@@ -132,12 +141,12 @@ class MainWindow(QWidget):
             '纪念日倒计时': 'anniversary_countdown',
             'BMI计算': 'bmi_calculator',
             '视频转GIF': 'video_to_gif_converter',
-            '音频格式转换': 'audio_format_converter',
+            '音频格式转换': None,  # 暂不支持
             '屏幕录制': 'screen_recorder',
             '表情包生成': 'meme_generator',
             'ASCII艺术生成': 'ascii_art_generator',
             '照片滤镜': 'photo_filter_applier',
-            '音频剪辑': 'audio_editor',
+            '音频剪辑': None,  # 暂不支持
             '视频字幕生成': 'video_subtitle_generator',
             '颜色拾取': 'color_picker',
             '简谱生成': 'simple_score_generator',
@@ -253,6 +262,9 @@ class MainWindow(QWidget):
         if item.childCount() == 0:
             zh_name = item.text(0)
             tool_key = self.tool_name_map.get(zh_name)
+            if tool_key is None and zh_name in ['音频格式转换', '音频剪辑']:
+                QMessageBox.information(self, "暂不支持", f"{zh_name} 暂不支持当前Python 3.12及以上版本，因pydub依赖audioop已被移除。建议降级Python或等待兼容更新。")
+                return
             if tool_key and tool_key in TOOLS:
                 tool_class = TOOLS[tool_key]
                 widget = ToolWidget(zh_name, tool_class)

@@ -1,5 +1,5 @@
 class QuickLaunchPanel:
-    """快捷启动面板 - 快速打开常用软件/文件"""
+    """快捷启动面板 - 快速打开常用软件/文件（演示）"""
     def execute(self, items=None):
-        print(f"[QuickLaunchPanel] 快捷启动: {items}")
-        return "快捷启动已完成（演示）"
+        # 实际可用os.startfile等，这里演示
+        return f"已快捷启动：{items or '[未指定项目]'}（演示）"

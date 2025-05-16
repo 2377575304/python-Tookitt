@@ -28,13 +28,13 @@ from .markdown_to_html_converter import MarkdownToHTMLConverter
 from .sqlite_browser import SQLiteBrowser
 from .pdf_text_extractor import PDFTextExtractor
 from .video_to_gif_converter import VideoToGIFConverter
-from .audio_format_converter import AudioFormatConverter
+# from .audio_format_converter import AudioFormatConverter
+# from .audio_editor import AudioEditor
 from .screen_recorder import ScreenRecorder
 from .image_watermarker import ImageWatermarker
 from .meme_generator import MemeGenerator
 from .ascii_art_generator import ASCIIArtGenerator
 from .photo_filter_applier import PhotoFilterApplier
-from .audio_editor import AudioEditor
 from .video_subtitle_generator import VideoSubtitleGenerator
 from .color_picker import ColorPicker
 from .task_scheduler import TaskScheduler
@@ -122,13 +122,13 @@ TOOLS.update({
     'sqlite_browser': SQLiteBrowser,
     'pdf_text_extractor': PDFTextExtractor,
     'video_to_gif_converter': VideoToGIFConverter,
-    'audio_format_converter': AudioFormatConverter,
+    # 'audio_format_converter': AudioFormatConverter,
+    # 'audio_editor': AudioEditor,
     'screen_recorder': ScreenRecorder,
     'image_watermarker': ImageWatermarker,
     'meme_generator': MemeGenerator,
     'ascii_art_generator': ASCIIArtGenerator,
     'photo_filter_applier': PhotoFilterApplier,
-    'audio_editor': AudioEditor,
     'video_subtitle_generator': VideoSubtitleGenerator,
     'color_picker': ColorPicker,
     'task_scheduler': TaskScheduler,
